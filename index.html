@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+    <title>Chubchub</title>
+   
+
+  <script src="https://rawgit.com/aframevr/aframe/master/dist/aframe-master.js"></script>
+  <script src="../../dist/aframe-super-shooter-kit.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
+  <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+  <script type="text/javascript" src="timer-component.js"></script>   
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+ 
+    <script>
+
+      $ = (sel) => document.querySelector(sel)
+      $$ = (sel) => document.querySelectorAll(sel)
+      on = (elem, type, hand) => elem.addEventListener(type,hand)
+     
+    </script>
+
+    <script>
+
+
+       let mainscore = 0;
+      
+        AFRAME.registerComponent('click-to-shoot', {
+            init: function () {
+
+            
+              document.body.addEventListener('mousedown', () => { 
+                this.el.emit('shoot'); 
+                 $("#shoot").components.sound.playSound();});
+
+              document.body.addEventListener('triggerdown', () => { 
+                this.el.emit('shoot'); 
+                $("#shoot").components.sound.playSound();
+                });
+           
+            }
+          });
+
+
+
+        AFRAME.registerComponent('hit-handler', {
+           // dependencies: ['material'],
+            init: function () {
+         
+              var el = this.el;
+              el.addEventListener('hit', () => {
+
+              el.parentNode.removeChild(el);
+
+              $("#hitsound").components.sound.playSound();
+
+
+
+              if ((!document.getElementById("do1") && !document.getElementById("do2") && !document.getElementById("do3")) ||(document.getElementById("do1") && document.getElementById("do2") && document.getElementById("do3")))
+              {
+                   mainscore= mainscore+ 1;
+               
+
+               /*********************** Winning scene is taken care of here*****************************/
+
+                  if(mainscore ==9)
+                    {
+                      $("#wrapper").setAttribute('position','-6  0.5 -6.5')       
+                  
+                      $("#cab").setAttribute('position','40 -200 0')   
+                      $("#timer").setAttribute('position','0 -3 0')
+
+                      //lighting change
+                      $("#light").setAttribute('light','color','orange')
+
+                       $("#light").setAttribute('light','color','orange')
+                       $("#light5").setAttribute('position','0 10 5')
+
+                       $("#light5").setAttribute('light','type','directional')
+                       $("#light1").setAttribute('light','color','orange')
+                       $("#light2").setAttribute('light','color','orange')
+                       $("#light3").setAttribute('light','color','orange')
+                       $("#light4").setAttribute('light','color','orange')
+                       $("#light5").setAttribute('light','color','orange')
+                       $("#light6").setAttribute('light','color','orange')
+                       $("#light7").setAttribute('light','color','orange')
+                       $("#light8").setAttribute('light','color','orange')
+                       $("#light3000").setAttribute('light','color','orange')
+
+                       //change skybox
+                       $("#video2").play();
+                       $("#sk").setAttribute('src','#video2')
+
+                       //change moon and planet position and rotation
+                       $("#planet").setAttribute('position','0 -5 0')
+                        $("#bigmoon").setAttribute('rotation','0 28 -15')
+
+                        //add video to the moon
+                        $("#video").play();
+                        $("#bigmoon").setAttribute('src','#video')
+                         $("#ua").setAttribute('gltf-model','models/airplane/PUSHILIN_Plane.gltf')
+                         $("#ua").setAttribute('scale','1.5 1.5 1.5') 
+                         
+                        $("#flying").setAttribute('gltf-model','models/flydog/model.gltf') 
+                        $("#d").setAttribute('gltf-model','models/doggo/Dog with a collar tex1.gltf')
+                        $("#bark").components.sound.playSound();
+                      
+                      //cabin with doggy inside
+                       $("#s13").setAttribute('gltf-model','models/cabin2/model.gltf')
+                       $("#s13").setAttribute('scale','7 7 7')
+                       $("#s13").setAttribute('position','45 -6.2 -6')
+                       $("#s13").setAttribute('rotation','0 -90 0')
+                      
+                       //change rocks texture
+                       $("#s").setAttribute('src','#ystone') 
+                       $("#s1").setAttribute('src','#ystone')
+                       $("#s2").setAttribute('src','#ystone')
+                       $("#s3").setAttribute('src','#ystone')
+                       $("#s4").setAttribute('src','#ystone')
+                       $("#s5").setAttribute('src','#ystone')
+                       $("#s6").setAttribute('src','#ystone')
+                       $("#s7").setAttribute('src','#ystone')
+                       $("#s8").setAttribute('src','#ystone')
+                       $("#s9").setAttribute('src','#ystone')
+                       $("#s10").setAttribute('src','#ystone')
+                       $("#s11").setAttribute('src','#ystone')
+                       $("#s12").setAttribute('src','#ystone')
+                       $("#s14").setAttribute('src','#ystone')
+                       $("#s15").setAttribute('src','#ystone')
+                       $("#s16").setAttribute('src','#ystone')
+                       $("#s17").setAttribute('src','#ystone')
+
+                       //change shooting sounds, stop clock sound
+                       $("#shoot").setAttribute('sound','src','url(fairy.wav)')
+                       $("#clock").components.sound.pause();
+
+                       //change dround texture
+                       $("#ground").setAttribute('src','#happyground1')
+
+                       //winning sounds
+                       $("#song").components.sound.pause();
+                       $("#cheer").components.sound.playSound();
+                       $("#win").components.sound.playSound();
+                       $("#bird").components.sound.playSound();
+
+                       //text
+                       $("#score").setAttribute('text','value','YOU WIN!') 
+                       $("#score").setAttribute('position','-0.3 0.5 -4')
+                       $("#score").setAttribute('text','color','orange')
+                       $("#score").setAttribute('text','height','8')
+                       $("#score").setAttribute('text','width','8')
+
+                       $("#camera").removeEventListner()
+
+                    }
+                    else if (mainscore==1)
+                    {
+                      //tell user that they can interact with the Donuts
+                      $("#score").setAttribute('position','-1.5 0.5 -4')
+                      $("#score").setAttribute('text','height','4')
+                       $("#score").setAttribute('text','width','4')
+                      $("#score").setAttribute('text','value','You can also interact with the donuts.' )
+                       
+                    }
+                    else if (mainscore==8)
+
+                    {
+                      // at 8 points, lead the user to the cabin to shoot the last target
+                      $("#score").setAttribute('position','-1.5 0.5 -4')
+                      $("#score").setAttribute('text','height','4')
+                      $("#score").setAttribute('text','width','4')
+                      $("#score").setAttribute('text','value','Go inside the house under the moon!' )
+                       
+                    }
+                    else
+                    {
+
+                      // else update the score
+                      $("#score").setAttribute('position','-0.3 0.5 -4')
+                      $("#score").setAttribute('text','value','Score '+(mainscore) )
+                    }
+               
+               }
+
+
+             /********************Take care of the greeting scene when the user chose the bullet template****/
+
+             //each donut in greeting sence is considered a target, user shoot to chose
+
+             //if donut 1 is chosen
+              else if (!document.getElementById("do1"))
+              { //geometry="primitive: torus; arc:360; radius: 0.6; radius-tubular:0.18"
+
+                $("#bulletTemplate").setAttribute('material','src','#dn')
+              
+                   $("#firsttext").setAttribute('position','-1.2 2.5 16')
+                 $("#firsttext").setAttribute('text','value','Move forward and shoot the spacemans!' )
+
+
+
+                var do2 = document.querySelector('#do2');
+                 do2.parentNode.removeChild(do2);
+
+
+                var do3 = document.querySelector('#do3');
+                 do3.parentNode.removeChild(do3);
+              }
+
+              //if donut 2 is chosen
+              else  if (!document.getElementById("do2"))
+              {
+
+                $("#firsttext").setAttribute('text','value','Move forward and shoot the spacemans!' )
+                $("#firsttext").setAttribute('position','-1.2 2.5 16')
+                $("#bulletTemplate").setAttribute('material','src','#dn1')
+
+                var do3 = document.querySelector('#do3');
+                 do3.parentNode.removeChild(do3);
+
+
+                var do1 = document.querySelector('#do1');
+                 do1.parentNode.removeChild(do1);
+              }
+
+              //if donut 3 is chosen
+              else  if (!document.getElementById("do3"))
+              {
+
+                 $("#firsttext").setAttribute('text','value','Move forward and shoot the spacemans!' )
+                     $("#firsttext").setAttribute('position','-1.2 2.5 16')
+                $("#bulletTemplate").setAttribute('material','src','#dn2')
+
+                var do2 = document.querySelector('#do2');
+                 do2.parentNode.removeChild(do2);
+
+
+                var do1 = document.querySelector('#do1');
+                 do1.parentNode.removeChild(do1);
+              }
+
+              });
+
+             
+            }
+          });
+
+
+       AFRAME.registerComponent('raycaster-autorefresh', {
+          init: function () {
+             
+              var el = this.el;
+              this.el.addEventListener('model-loaded', function () {
+                  var cursorEl = el.querySelector('[raycaster]');
+                  cursorEl.components.raycaster.refreshObjects();
+              });
+            }
+        });
+
+   
+</script>
+
+
+  </head>
+
+ 
+  <body>
+
+    <a-scene > 
+
+     	<a-assets>
+
+ 
+          <a-asset-item id="smallman" 
+           src="models/space_man_hi_res/scene.gltf"></a-asset-item>
+
+          <a-asset-item id="ufo" 
+           src="models/ufo/model.gltf"></a-asset-item>
+
+          <a-asset-item id="cabin" 
+           src="models/cabin1/Cabin.gltf"></a-asset-item>
+
+          <a-asset-item id="chubchub" 
+           src="models/evilDoggo/model.gltf"></a-asset-item>
+
+             <a-asset-item id="bakery" 
+           src="models/bakery/Bakery_1243.gltf"></a-asset-item>
+
+        
+          <img id="dn" 
+           src="pics/donut.jpg" crossorigin="anonymous">
+
+           <img id="m1" 
+           src="pics/moon2.jpg" crossorigin="anonymous">
+
+          <img id="dn1" 
+           src="pics/donut1.jpg" crossorigin="anonymous">
+
+
+          <img id="dn2" 
+           src="pics/donut2.jpg" crossorigin="anonymous">
+
+           
+          <img id="mars1" 
+           src="pics/mars1.jpg" crossorigin="anonymous">
+
+          <img id="planet1" 
+           src="pics/planet1.jpg" crossorigin="anonymous">
+
+          <img id="green1" 
+           src="pics/green1.jpg" crossorigin="anonymous">
+
+          <img id="happyground1" 
+           src="pics/happyground1.jpg" crossorigin="anonymous">
+
+          <img id="ystone" 
+           src="pics/ystone.jpg" crossorigin="anonymous">
+
+          <video   id="video" autoplay='false' loop="true" src="vids/newfile1.mp4"  crossorigin="anonymous"  >
+          <video   id="video1" autoplay loop="true" src="vids/video.mp4"  crossorigin="anonymous"  >
+          <video   id="video2" autoplay='false' loop="true" src="vids/video5.mp4"  crossorigin="anonymous"  >
+          <video   id="vid" autoplay='false' loop="true" src="vids/vid1.mp4"  crossorigin="anonymous"  >
+         
+
+      </a-assets>
+
+
+  
+
+    <!-- ---------------------CONTROLLER and CAMERA------------------------------>
+    
+
+
+      <a-entity movement-controls="constrainToNavMesh: true" id="wrapper" position="0.5 0 20">
+
+        <!--camera-->
+              <a-camera id="camera"  look-controls="pointerLockEnabled: true"   shooter click-to-shoot>
+
+                <!--score and timer in front of user-->
+                 <a-text id="score" position="-0.3 0.5 -4" value="Score: 0"></a-text>
+
+                 <a-entity id="timer" timer=" timerTime:1200;DigitsColor:red"
+                      position="-0 0 -5" ></a-entity>
+
+                  <a-entity id='shoot'sound="src: url(audio/shoot2.mp3); autoplay: false; loop: false;  volume:0.5"></a-entity>
+              </a-camera>
+
+        <!--controller-->
+
+              <a-entity id='control' oculus-go-controls shooter click-to-shoot > <a-entity id='shoot'
+                 sound="src: url(audio/shoot2.mp3); autoplay: false; loop: false;  volume:0.5"></a-entity></a-entity>
+
+              <a-entity tracked-controls="controller: 0; idPrefix: OpenVR"></a-entity>
+
+               <a-entity laser-controls="hand: right"  static-body></a-entity>
+
+
+
+        <!-- sounds that are always with user (prevent sounds fading as user moving)-->
+              <a-entity id="song" sound="src: url(audio/sound2.wav); loop:true; autoplay:true; volume:0.5;"></a-entity>
+                
+              <a-entity id='hitsound'
+              sound="src: url(audio/hit.mp3); autoplay: false; loop: false;volume:0.8;" ></a-entity>
+
+              <a-entity id='cheer'
+              sound="src: url(audio/cheer.wav); autoplay: false; loop: false; volume:0.9"></a-entity>
+              <a-entity id='win'
+              sound="src: url(audio/win.wav); autoplay: false; loop: true; volume:0.8 "></a-entity>
+            
+              <a-entity id='bird'
+              sound="src: url(audio/bird.wav); autoplay: false; loop: true; volume:1 "></a-entity>
+
+              <a-entity id='clock'
+              sound="src: url(audio/clock.wav); autoplay:true ; loop: true; volume:1 ;"></a-entity>
+
+              <a-entity id='lose'
+             sound="src: url(audio/losesound.wav); autoplay: false; loop: false; volume:2 "></a-entity>
+
+              <a-entity id='losemain'
+               sound="src: url(audio/losemain.wav); autoplay: false; loop: true; volume:1"></a-entity>
+
+      </a-entity>
+
+     
+      <!--bullet-->
+
+      <a-entity id="bulletTemplate"  bullet=' cacheSize: 100 ; speed: 20' geometry="primitive: torus; arc:360; radius: 0.5; radius-tubular:0.15" material="color: white" ></a-entity>
+
+  
+      <!----------------------SCENERY---------------------->
+
+      <!--UFO and Airplane-->
+       <a-entity   position="-20 5 -10"  id='ua'  scale=' 2 2 2' gltf-model="#ufo" rotation = '20 0 0' animation="property: position; to: 30 7 -20; loop: true; dur: 20000; easing: linear"  ></a-entity>
+
+       <!--flying doggo, model is set as winning-->
+      <a-entity   position="-15 7 20"  id='flying'  scale=' 2 2 2' rotation = '20 180 0' animation="property: position; to: 30 5 8; loop: true; dur: 20000; easing: linear"  ></a-entity>
+
+      <!-- doggo in the house (model only load as winning)-->
+      <a-entity id='d'  rotation ='0 -90 0' position="37 1.5 -9.5" scale='0.5 0.5 0.5' \ >
+              <a-entity id='bark'  sound="src: url(audio/bark.wav); autoplay: false; loop: true; volume:1 "></a-entity>
+        </a-entity>
+
+      <!--skybox-->
+      <a-sky id="sk" src="#video1"></a-sky>
+
+      <!--plane-->
+      <a-plane id='ground' src="#mars1"
+               static-body
+              geometry="primitive: cylinder; radius:500; height: 0.001" 
+              position="0 0 0" 
+              material="shader: flat;"
+              shadow="receive:true">
+      </a-plane>
+
+   
+   <!-- moon and a planet-->
+     <a-sphere id="bigmoon" position="-20 15 -30" radius="5" src="#m1"></a-sphere>
+     <a-sphere id="planet" position="-5 8 -30" radius="2" src="#planet1"></a-sphere>
+
+     <!--lighting-->
+    <a-entity id="light" light="type: directional; color: blue; intensity: 0.4;"
+              position="31 80 -50" castShadow: true;></a-entity>
+     <a-entity id="light1"  light="type: directional; color: blue; intensity: 0.4;"
+              position="-8 50 -7" castShadow: true;></a-entity>
+    <a-entity id="light2"  light="type: hemisphere; color: white; groundColor: #5424ff; intensity: 0.5"  castShadow: true;></a-entity>
+    <a-entity id="light3"  light="type: point; intensity: 1.6; distance: 5; decay: 2; color: red" 
+      position="0.275 2 -6"  castShadow: true;></a-entity>
+    <a-entity id="light4"  light="type: point; intensity: 1.6; distance: 5; decay: 2; color: red" 
+      position="0.275 5 -6"  castShadow: true;></a-entity>
+    <a-entity id="light5"  light="type: point; intensity: 1.0; distance: 5; decay: 2; color: red" 
+      position="-1 5 -3.77"  castShadow: true;></a-entity>
+     <a-entity id="light6"  light="type: point; intensity: 0.8; distance: 5; decay: 2; color: red" 
+      position="1 2 -3.77"  castShadow: true;></a-entity>
+     <a-entity id="light7"  light="type: point; intensity: 0.8; distance: 5; decay: 2; color: red" 
+      position="4 2 -3.77"  castShadow: true;></a-entity>
+    <a-entity id="light8"  light="type: point; intensity: 0.8; distance: 5; decay: 2; color: red" 
+      position="-4 2 -3.77"  castShadow: true;></a-entity>
+      <a-entity id="light3000" light="type: directional; color: blue; intensity: 0.7;"
+              position="-40 10 -10"  castShadow: true;></a-entity>
+
+
+     <!-- cabin-->
+      <a-icosahedron id='cab' position= "-40 9 -15" gltf-model="#cabin" scale="0.03 0.03 0.03"  rotation="0 90 0"></a-icosahedron>
+
+          
+     <!-- componnents for greeting sence where player chose bullet template-->
+      <a-icosahedron id='bakery' position= " 0 -2  18" gltf-model="#bakery" scale="0.2 0.2 0.2"  rotation="0 -180 0"></a-icosahedron>
+
+
+      <a-text id= 'firsttext' value="Chose a bullet." position="-0.4 2.45 15" height='4' width='4'></a-text>
+
+
+      <a-entity   id='do1'
+        class="target" target   
+          geometry="primitive: torus; arc:360; radius: 0.2; radius-tubular:0.06" material="src: #dn" 
+         rotation='0 -180 0'
+         position="0.5 3.3  15"
+         hit-handler  
+      ></a-entity>
+
+
+     <a-entity   id='do2'
+        class="target" target   
+          geometry="primitive: torus; arc:360; radius: 0.2; radius-tubular:0.06" material="src: #dn1" 
+         rotation='0 -180 0'
+         position="-1.8 3.3  15"
+         hit-handler  
+      ></a-entity>
+
+
+     <a-entity   id='do3'
+        class="target" target   
+          geometry="primitive: torus; arc:360; radius: 0.2; radius-tubular:0.06" material="src: #dn2" 
+         rotation='0 -180 0'
+         position="2.8 3.3  15"
+         hit-handler  
+      ></a-entity>
+
+
+
+      <!-- rocks-->
+      <a-icosahedron id='s' position= "5 0 10" src="#green1" radius="1" ></a-icosahedron>
+      <a-icosahedron id='s1' src="#green1" radius="1" position="-2 -0.3 -3.5" ></a-icosahedron>
+      <a-icosahedron id='s2' position= "-5 -0.5 -2" src="#green1" radius="0.5" ></a-icosahedron>
+      <a-tetrahedron id='s3' src="#green1" radius="1" position="-5 -0.1 -5"></a-tetrahedron>
+      <a-icosahedron id='s4' position= "-7 0 12" src="#green1" radius="0.7"></a-icosahedron>
+      <a-icosahedron id='s5' src="#green1" radius="1" position="3.5 -0.1 -6" ></a-icosahedron>
+      <a-tetrahedron id='s6' position= "-2 -0.2 -8" src="#green1" radius="1"></a-tetrahedron>
+      <a-icosahedron id='s7' src="#green1" radius="1" position="1.5 -0.1 -7"></a-icosahedron>
+      <a-tetrahedron id='s8' position= "1 -0.4 -4" src="#green1" radius="0.3" ></a-tetrahedron>
+      <a-tetrahedron id='s9' position= "3 -0 8" src="#green1" radius="0.5"></a-tetrahedron>
+      <a-tetrahedron id='s10' position= "-7 0.7 10.5" src="#green1" radius="1"></a-tetrahedron>
+      <a-tetrahedron id='s11' src="#green1" radius="1" position="-10 -0.1 -15"></a-tetrahedron>
+      <a-icosahedron id='s12' src="#green1" radius="1" position="17 -0.1 -7" ></a-icosahedron>
+      <a-icosahedron id='s13' position= "20 0 -20" src="#green1" radius="6" rotation="0 90 0"></a-icosahedron>
+      <a-icosahedron id='s14' src="#green1" radius="1" position="25 -0.1 -10"></a-icosahedron>
+      <a-tetrahedron id='s15' position= "-9 -0.4 9" src="#green1" radius="0.3" ></a-tetrahedron>
+      <a-tetrahedron id='s16' position= "8 -0.5 -4.9" src="#green1" radius="0.5"></a-tetrahedron>
+      <a-tetrahedron id='s17' position= "9.5 0.7 6" src="#green1" radius="1"></a-tetrahedron>
+
+
+    
+    <!----------------------SPACEMAN TARGET---------------------->
+
+
+      <a-entity 
+      class="target" target   
+      id='sm'  
+      gltf-model="#smallman" 
+      scale="0.1 0.1 0.1" 
+      hit-handler   
+      position='2.5 6 4'  
+      rotation='10 0 0' 
+      animation='property:rotation; to: 0 360 0; loop:true; dur:20000'>
+      </a-entity>
+
+      <a-entity 
+      class="target" target
+      rotation='10 0 0' 
+      animation='property:rotation; to: 0 -360 0; loop:true; dur:20000'
+      id='sm1' 
+      gltf-model="#smallman" 
+      scale="0.1 0.1 0.1" 
+      hit-handler  
+       position='1 12 10'></a-entity>
+
+      <a-entity 
+      class="target" target
+      rotation='10 0 0' 
+      animation='property:rotation; to: 0 -360 0; loop:true; dur:20000'
+       id='sm3' 
+       gltf-model="#smallman" 
+       scale="0.1 0.1 0.1"
+       hit-handler 
+       position='4 6 -4'></a-entity>
+
+
+       <a-entity   class="target" target
+       rotation='10 0 0' animation='property:rotation; to: 0 360 0; loop:true; dur:20000'
+         id='sm6' gltf-model="#smallman" scale="0.1 0.1 0.1" hit-handler 
+        position='1 5 -4.5'
+        ></a-entity>
+
+       <a-entity   class="target" target   id='sm7' gltf-model="#smallman" scale="0.1 0.1 0.1" hit-handler 
+       rotation='10 0 0' animation='property:rotation; to: 0 360 0; loop:true; dur:20000'
+        position='-10 8 5'></a-entity>
+   
+
+       <a-entity 
+       class="target" target
+        rotation='10 0 0' animation='property:rotation; to: 0 360 0; loop:true; dur:20000'
+        id='sm8' 
+        gltf-model="#smallman" 
+        scale="0.1 0.1 0.1" 
+        hit-handler 
+       position='11 6 6.5'></a-entity>
+
+    
+        <a-entity   
+        class="target" target
+        rotation='10 0 0' 
+        animation='property:rotation; to: 0 -360 0; loop:true; dur:20000'
+        id='sm9' 
+        gltf-model="#smallman" scale="0.1 0.1 0.1" hit-handler 
+        position='-5 10 -1'
+        ></a-entity>
+
+        <a-entity   
+        class="target" target  
+        rotation='10 0 0' 
+        animation='property:rotation; to: 0 360 0; loop:true; dur:20000'
+        id='sm10' gltf-model="#smallman" scale="0.1 0.1 0.1" hit-handler  
+        position=  '6.5 7  -1.5'></a-entity>
+
+       <a-entity   
+        class="target" target   
+        animation='property:rotation; to: 0 360 0; loop:true; dur:10000'
+         id='chubby' 
+         gltf-model="#chubchub" 
+         scale="2 2 2 " 
+         hit-handler  
+         position= "-42 5  -20"></a-entity>
+
+
+
+    <!--------------------- DONUTS---------------------->
+        
+      <a-torus dynamic-body rotation = '-90 0 0' position="1.5 0.3 8"  src="#dn1"   radius="0.3" radius-tubular="0.09"></a-torus>
+      
+      <a-torus  dynamic-body  position="2 0.3 -5" src="#dn2"   radius="0.3" radius-tubular="0.09"></a-torus>
+      <a-torus dynamic-body   rotation = '-90 0 0'  position="-4 0.3 -4"  src="#dn1"  radius="0.3" radius-tubular="0.09"></a-torus>
+     
+      <a-torus  dynamic-body  rotation = '-90 0 0'  src="#dn" position="0 0.3 2"  radius="0.3" radius-tubular="0.09"></a-torus>
+
+      <a-torus dynamic-body  rotation = '-90 0 0'  position="7 0.3 -2" src="#dn1"   radius="0.3" radius-tubular="0.09"></a-torus>
+     
+      <a-torus dynamic-body  rotation = '-90 0 0'  position="3 0.3 5" src="#dn"  radius="0.3" radius-tubular="0.09"> </a-torus>
+
+      <a-torus dynamic-body    position="-0.5 0.3 -3"    src="#dn1"   radius="0.3" radius-tubular="0.09"></a-torus>
+
+      <a-torus dynamic-body   rotation = '-90 0 0' position="-4 0.3 -2" src="#dn2"   radius="0.25" radius-tubular="0.09"></a-torus>
+     
+      <a-torus dynamic-body   rotation = '-90 0 0'  position="-4 0.3 3"  src="#dn1"  radius="0.3" radius-tubular="0.09"></a-torus>
+     
+      <a-torus dynamic-body  rotation = '-90 0 0'  position="3 0.3 -0.9" src="#dn"  radius="0.3" radius-tubular="0.09"></a-torus>
+
+      <a-torus  dynamic-body    src="#dn" position="0 0.3 10"  radius="0.3" radius-tubular="0.09"></a-torus>
+    
+     </a-scene>
+
+  
+  </body>
+
+</html>
