@@ -2,6 +2,7 @@
 Chubchub is a VR shooting game created using A-Frame. The game can run on both PC and Oculus Go.  The game functions using head motion tracking, hand gestures detecting, A-Frame shooting kits and A-Frame Physics. The game makes use of 3D models, 3D audio and 360 videos.
 
 Demo:
+[![Watch the video](https://i.imgur.com/vKb2F1B.png)](https://www.youtube.com/watch?v=MkCKP7M16yA&feature=youtu.be&fbclid=IwAR3mgHYk2pZQOm6el0KafFER-7YgmXGSbv0RkgmE7NsL7Cjb5OYG6Pn_p1w)
 
 The user is greeted inside a bakery where they will chose their bullet template. There are 3 flavors to choose (chocolate, glaze or sprinkle). After choosing, the bullet will change from bland to the chosen flavor.
 
