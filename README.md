@@ -5,6 +5,8 @@ Chubchub is a VR shooting game created using A-Frame. The game can run on both P
 
 [![Watch the video](https://github.com/HaiTrieuNg/Chubchub_VRGame/blob/master/RM_Images/Screenshot%20(942).png)](https://www.youtube.com/watch?v=MkCKP7M16yA&feature=youtu.be&fbclid=IwAR3mgHYk2pZQOm6el0KafFER-7YgmXGSbv0RkgmE7NsL7Cjb5OYG6Pn_p1w)
 
+
+
 The user is greeted inside a bakery where they will chose their bullet template. There are 3 flavors to choose (chocolate, glaze or sprinkle). After choosing, the bullet will change from bland to the chosen flavor.
 
 ![Greeting](https://github.com/HaiTrieuNg/Chubchub_VRGame/blob/master/RM_Images/Screenshot%20(876).png)
